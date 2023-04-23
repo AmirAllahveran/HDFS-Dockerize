@@ -1,0 +1,39 @@
+# Use a base image
+FROM ubuntu:18.04
+
+# Set environment variables
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV HADOOP_HOME=/opt/hadoop
+ENV HADOOP_VERSION=3.3.1
+ENV HADOOP_URL=https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        openjdk-8-jdk \
+        curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download and extract Hadoop
+RUN curl -fsSL $HADOOP_URL -o /tmp/hadoop.tar.gz && \
+    tar -xzf /tmp/hadoop.tar.gz -C /opt && \
+    rm /tmp/hadoop.tar.gz && \
+    ln -s /opt/hadoop-$HADOOP_VERSION $HADOOP_HOME
+
+# Set environment variables for Hadoop binaries
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+# Set working directory
+WORKDIR $HADOOP_HOME
+
+# Expose Hadoop ports
+EXPOSE 8088 19888 50070 50075 50010 50020 9864 9000
+
+# Copy configuration files
+COPY core-site.xml $HADOOP_HOME/etc/hadoop/
+COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
+COPY mapred-site.xml $HADOOP_HOME/etc/hadoop/
+COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/
+
+# Start Hadoop components
+CMD ["sh", "-c", "hdfs namenode & hdfs datanode & yarn resourcemanager & yarn nodemanager & yarn timelineserver"]

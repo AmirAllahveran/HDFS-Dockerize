@@ -1,0 +1,43 @@
+# Use a base image
+FROM ubuntu:18.04
+
+# Set environment variables
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV HADOOP_HOME=/opt/hadoop
+ENV HADOOP_VERSION=3.3.1
+ENV HADOOP_URL=https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+ENV DATA_DIR=/data/hadoop
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        openjdk-8-jdk \
+        curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download and extract Hadoop
+RUN curl -fsSL $HADOOP_URL -o /tmp/hadoop.tar.gz && \
+    tar -xzf /tmp/hadoop.tar.gz -C /opt && \
+    rm /tmp/hadoop.tar.gz && \
+    ln -s /opt/hadoop-$HADOOP_VERSION $HADOOP_HOME
+
+# Set environment variables for Hadoop binaries
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+# Create data directory
+RUN mkdir -p $DATA_DIR && \
+    chown -R root:root $DATA_DIR && \
+    chmod 755 $DATA_DIR
+
+# Set working directory
+WORKDIR $HADOOP_HOME
+
+# Copy configuration files
+COPY core-site.xml $HADOOP_HOME/etc/hadoop/
+COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
+
+# Expose HDFS DataNode port
+EXPOSE 9864
+
+# Start HDFS DataNode
+CMD ["hdfs", "datanode"]
