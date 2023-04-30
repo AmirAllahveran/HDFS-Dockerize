@@ -29,13 +29,13 @@ jobs:
         id: get_version
         run: echo "::set-output name=version::$(grep 'HADOOP_VERSION=' Dockerfile.datanode | cut -d '=' -f 2)"
 
-      - name: Build and push DataNode
+      - name: Build and push NameNode
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./Dockerfile.datanode
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/datanode:${{ steps.get_version.outputs.version }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/namenode:${{ steps.get_version.outputs.version }}
 
       - name: Build and push DataNode
         uses: docker/build-push-action@v4
