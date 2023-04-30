@@ -36,8 +36,8 @@ WORKDIR $HADOOP_HOME
 EXPOSE 9870 9000
 
 # Copy configuration files
-COPY core-site.xml $HADOOP_HOME/etc/hadoop/
-COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
+# COPY core-site.xml $HADOOP_HOME/etc/hadoop/
+# COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
 COPY start-namenode.sh /
 
 # Start HDFS NameNode
