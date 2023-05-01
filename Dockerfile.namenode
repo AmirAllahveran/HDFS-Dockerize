@@ -39,6 +39,7 @@ EXPOSE 9870 9000
 # COPY core-site.xml $HADOOP_HOME/etc/hadoop/
 # COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
 COPY start-namenode.sh /
+RUN chmod +x /start-namenode.sh
 
 # Start HDFS NameNode
 CMD ["/start-namenode.sh"]
