@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile.datanode
+          file: ./Dockerfile.namenode
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/namenode:${{ steps.get_version.outputs.version }}
 
