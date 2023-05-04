@@ -45,4 +45,20 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/datanode:${{ steps.get_version.outputs.version }}
 
+      - name: Build and push Hadoop
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile.hadoop
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hadoop:${{ steps.get_version.outputs.version }}
+
+      - name: Build and push JournalNode
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile.journalnode
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/journalnode:${{ steps.get_version.outputs.version }}
+
         

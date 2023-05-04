@@ -36,4 +36,4 @@ COPY mapred-site.xml $HADOOP_HOME/etc/hadoop/
 COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/
 
 # Start Hadoop components
-CMD ["sh", "-c", "yarn resourcemanager & yarn nodemanager & yarn timelineserver"]
+CMD ["sh", "-c", "/usr/bin/tail","-f","/var/log/dmesg"]

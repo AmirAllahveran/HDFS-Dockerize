@@ -33,9 +33,9 @@ WORKDIR $HADOOP_HOME
 EXPOSE 8485 8480
 
 # Copy configuration files
-COPY core-site.xml $HADOOP_HOME/etc/hadoop/
-COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
-COPY start-journalnode.sh /
+# COPY core-site.xml $HADOOP_HOME/etc/hadoop/
+# COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
+# COPY start-journalnode.sh /
 
 # Start HDFS JournalNode
-CMD ["/start-journalnode.sh"]
+CMD ["hdfs", "journalnode"]
