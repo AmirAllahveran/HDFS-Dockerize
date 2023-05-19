@@ -36,4 +36,4 @@ EXPOSE 8088 19888 50070 50075 50010 50020 9864 9000
 # COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/
 
 # Start Hadoop components
-CMD ["/bin/sh", "-c", "/usr/bin/tail","-f","/dev/null"]
+CMD ["sleep", "1000000000"]
