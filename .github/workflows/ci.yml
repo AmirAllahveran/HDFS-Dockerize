@@ -27,7 +27,7 @@ jobs:
 
       - name: Get Hadoop version
         id: get_version
-        run: echo "::set-output name=version::$(grep 'HADOOP_VERSION=' Dockerfile.datanode | cut -d '=' -f 2)"
+        run: echo "version=$(grep 'HADOOP_VERSION=' Dockerfile.datanode | cut -d '=' -f 2)" >> $GITHUB_OUTPUT
 
       # - name: Build and push NameNode
       #   uses: docker/build-push-action@v4
@@ -53,12 +53,10 @@ jobs:
       #     push: true
       #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/hadoop:${{ steps.get_version.outputs.version }}
 
-      - name: Build and push JournalNode
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile.journalnode
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/journalnode:${{ steps.get_version.outputs.version }}
-
-        
+      # - name: Build and push JournalNode
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile.journalnode
+      #     push: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/journalnode:${{ steps.get_version.outputs.version }}
