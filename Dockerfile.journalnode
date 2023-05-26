@@ -6,7 +6,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV HADOOP_HOME=/opt/hadoop
 ENV HADOOP_VERSION=3.3.1
 ENV HADOOP_URL=https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
-ENV JOURNALNODE_DIR=/data/hadoop/journalnode
+# ENV JOURNALNODE_DIR=/data/hadoop/journalnode
 
 # Install dependencies
 RUN apt-get update && \
@@ -24,16 +24,16 @@ RUN curl -fsSL $HADOOP_URL -o /tmp/hadoop.tar.gz && \
 # Set environment variables for Hadoop binaries
 ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
-# Create JournalNode data directory
-RUN mkdir -p $JOURNALNODE_DIR && \
-    chown -R root:root $JOURNALNODE_DIR && \
-    chmod 755 $JOURNALNODE_DIR
+# # Create JournalNode data directory
+# RUN mkdir -p $JOURNALNODE_DIR && \
+#     chown -R root:root $JOURNALNODE_DIR && \
+#     chmod 755 $JOURNALNODE_DIR
 
 # Set working directory
 WORKDIR $HADOOP_HOME
 
 # Expose HDFS JournalNode ports
-EXPOSE 8485 8480
+# EXPOSE 8485 8480
 
 # Copy configuration files
 # COPY core-site.xml $HADOOP_HOME/etc/hadoop/
