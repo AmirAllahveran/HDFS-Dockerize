@@ -29,21 +29,21 @@ jobs:
         id: get_version
         run: echo "version=$(grep 'HADOOP_VERSION=' Dockerfile.datanode | cut -d '=' -f 2)" >> $GITHUB_OUTPUT
 
-      - name: Build and push NameNode
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile.namenode
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/namenode:${{ steps.get_version.outputs.version }}
+      # - name: Build and push NameNode
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile.namenode
+      #     push: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/namenode:${{ steps.get_version.outputs.version }}
 
-      - name: Build and push DataNode
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile.datanode
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/datanode:${{ steps.get_version.outputs.version }}
+      # - name: Build and push DataNode
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile.datanode
+      #     push: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/datanode:${{ steps.get_version.outputs.version }}
 
       - name: Build and push Hadoop
         uses: docker/build-push-action@v4
@@ -53,10 +53,10 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/hadoop:${{ steps.get_version.outputs.version }}
 
-      - name: Build and push JournalNode
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile.journalnode
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/journalnode:${{ steps.get_version.outputs.version }}
+      # - name: Build and push JournalNode
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile.journalnode
+      #     push: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/journalnode:${{ steps.get_version.outputs.version }}
